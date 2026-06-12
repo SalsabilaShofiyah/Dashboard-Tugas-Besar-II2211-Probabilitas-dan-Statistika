@@ -111,7 +111,7 @@ with col_d1:
     
     render_insight_card("Insight Grafik 1 Sebaran Usia", [
         "Mayoritas responden terkonsentrasi pada usia produktif muda di rentang <b>20 hingga 22 tahun</b>",
-        "Kemiringan kurva membuktikan bahwa riset ini didominasi oleh populasi <b>generasi Z</b>"
+        "Riset ini didominasi oleh populasi <b>generasi Z</b>"
     ])
 
 with col_d2:
@@ -132,8 +132,8 @@ fig_par = px.parallel_categories(df_clean, dimensions=['gender', 'online1', 'ai_
 st.plotly_chart(fig_par, use_container_width=True)
 
 render_insight_card("Insight Grafik 3 Aliran Aktivitas Digital", [
-    "Tingkat intensitas berselancar di internet <b>tidak mengubah</b> muara pandangan publik terhadap hukum teknologi",
-    "Baik pria maupun wanita dengan aktivitas online tinggi tetap bersepakat menuntut adanya <b>regulasi AI yang ketat</b>"
+    "Tingkat intensitas menggunakan internet <b>tidak mengubah</b> pandangan publik terhadap hukum teknologi",
+    "Baik pria maupun wanita yang beraktivitas online tinggi, bersepakat terkait adanya <b>regulasi AI yang ketat</b>"
 ])
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -145,8 +145,8 @@ with col_m1:
     st.plotly_chart(fig_sun, use_container_width=True)
     
     render_insight_card("Insight Grafik 4 Hierarki Pendidikan", [
-        "Kesadaran akan ancaman teknologi <b>tidak didominasi</b> oleh kelompok akademisi tingkat tinggi saja melainkan merata",
-        "Penolakan atau keraguan terhadap regulasi <b>sangat minim terlihat</b> di setiap anak cabang hierarki data"
+        "Kesadaran akan ancaman teknologi merata dan <b>tidak didominasi</b> oleh kelompok akademisi tingkat tinggi saja ",
+        "Penolakan atau keraguan terhadap regulasi <b>sangat minim terlihat</b> "
     ])
     
 with col_m2:
@@ -157,8 +157,7 @@ with col_m2:
     
     render_insight_card("Insight Grafik 5 Struktur Ekonomi", [
         "Blok pendapatan di bawah 2 juta rupiah didominasi secara penuh oleh kelompok <b>mahasiswa aktif</b>",
-        "Penyebaran klaster pendapatan yang lebih tinggi diisi oleh pekerja sektor swasta secara <b>bervariasi</b>"
-    ])
+        "Penyebaran kelompok pendapatan yang lebih tinggi mayoritas diisi oleh pekerja sektor swasta secara <b>variatif</b>"
 
 # SECTION TASK 6 DAN 7
 st.header("Task 6 dan 7 Analisis Inferensial Lanjutan")
@@ -170,8 +169,8 @@ with col_i1:
     st.plotly_chart(fig_box, use_container_width=True)
     
     render_insight_card("Insight Grafik 6 Pengujian ANOVA", [
-        "Perhitungan varians menemukan <b>perbedaan usia rata rata</b> yang sangat nyata antar jenjang pendidikan saat ini",
-        "Pola sebaran ini sangat logis dan mencerminkan linimasa perjalanan waktu <b>penempuhan akademis</b> seseorang"
+        "Perhitungan varians menemukan <b>perbedaan usia rata rata</b> yang sangat variatif antar jenjang pendidikan saat ini",
+        "Pola sebaran ini mencerminkan linimasa perjalanan waktu <b>penempuhan akademis</b> seorang responden"
     ])
     
 with col_i2:
@@ -188,7 +187,7 @@ with col_i2:
 # SECTION TASK 8
 st.header("Task 8 Kesimpulan Analisis Inferensial Komprehensif")
 render_insight_card("Kesimpulan Akhir Studi Kasus", [
-    "<b>Aksesibilitas Teknologi</b> Melalui uji Z test ditemukan adopsi ChatGPT sudah merata tanpa ada kesenjangan gender sama sekali",
-    "<b>Hubungan Demografi</b> Hasil perhitungan tingkat varians membuktikan perjalanan usia selalu beriringan dengan tingkat edukasi saat ini",
-    "<b>Validitas Perilaku</b> Pengujian independensi membuktikan pandangan urgensi aturan hukum teknologi AI bersifat bebas murni lahir dari kesadaran kolektif masyarakat"
+    "<b>Aksesibilitas Teknologi</b> Uji Z test menemukan insight bahwa adopsi ChatGPT sudah merata tanpa adanya kesenjangan gender",
+    "<b>Hubungan Demografi</b> Hasil perhitungan tingkat varians membuktikan bahwa perjalanan usia selalu beriringan dengan tingkat edukasi saat ini",
+    "<b>Validitas Perilaku</b> Pengujian independensi membuktikan pandangan urgensi aturan hukum teknologi AI bersifat bebas dan lahir dari kesadaran kolektif masyarakat, bukan hanya sekelompok golongan saja"
 ])
