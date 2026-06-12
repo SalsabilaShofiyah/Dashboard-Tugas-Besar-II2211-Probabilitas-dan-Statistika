@@ -5,18 +5,49 @@ import plotly.express as px
 # SETUP TAMPILAN HALAMAN WEB MINIMALIS SATU HALAMAN
 st.set_page_config(page_title="AI Regulation Portfolio Dashboard", layout="wide")
 
-# CSS Kustom untuk memperkuat kontras teks agar terlihat sangat jelas
+# CSS Kustom Premium menggunakan Font Plus Jakarta Sans dan UI Kontras Tinggi
 st.markdown("""
     <style>
-    .main {
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
+    html, body, [class*="css"], .main {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
         background-color: #fafafa;
     }
-    h1, h2, h3 {
-        color: #1e3d59;
+    
+    h1 {
+        font-weight: 800 !important;
+        color: #1e3d59 !important;
+        font-size: 36px !important;
+        letter-spacing: -0.5px;
     }
-    p, li {
-        color: #000000 !important;
+    
+    h2 {
+        font-weight: 700 !important;
+        color: #1e3d59 !important;
+        font-size: 24px !important;
+        letter-spacing: -0.3px;
+        margin-top: 35px !important;
+        border-bottom: 2px solid #eef5f9;
+        padding-bottom: 12px;
+    }
+    
+    p {
+        color: #2d3748 !important;
         font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+    
+    [data-testid="stMetricLabel"] p {
+        color: #718096 !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+    }
+    
+    [data-testid="stMetricValue"] {
+        font-size: 32px !important;
+        font-weight: 700 !important;
+        color: #1e3d59 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -37,9 +68,25 @@ def load_data():
 
 df_clean = load_data()
 
+# Helper untuk merender Komponen UI/UX Kotak Sorot Biru Interaktif Highlight Card
+def render_insight_card(title_text, points_list):
+    items_html = ""
+    for pt in points_list:
+        items_html += f"<li style='margin-bottom: 10px; line-height: 1.6; color: #2d3748;'>{pt}</li>"
+        
+    card_html = f"""
+    <div style="background-color: #eef7fc; border-left: 6px solid #1e3d59; padding: 22px; border-radius: 12px; margin-top: 15px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(30,61,89,0.04);">
+        <p style="color: #1e3d59 !important; font-weight: 700 !important; font-size: 17px !important; margin-top: 0px; margin-bottom: 14px; letter-spacing: -0.2px;">Konteks Analisis Kasus {title_text}</p>
+        <ul style="margin-left: 0px; padding-left: 18px; font-size: 15px !important;">
+            {items_html}
+        </ul>
+    </div>
+    """
+    st.markdown(card_html, unsafe_allow_html=True)
+
 # HEADER UTAMA DASHBOARD
 st.title("Dashboard Portofolio Analisis Persepsi Regulasi AI")
-st.markdown("Dikembangkan oleh Salsabila Shofiyah NIM 18224088 Kelas K02 sebagai pemenuhan tugas besar II2211 Probabilitas dan Statistik")
+st.markdown("<b>Dikembangkan oleh Salsabila Shofiyah NIM 18224088 Kelas K02 sebagai pemenuhan tugas besar II2211 Probabilitas dan Statistik</b>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
 # RINGKASAN METRIK UTAMA
@@ -50,7 +97,7 @@ with m2:
     st.metric("Rata Rata Usia", f"{round(df_clean['age'].mean(), 1)} Tahun")
 with m3:
     st.metric("Aspirasi Regulasi AI", "88.6% Setuju")
-st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 # SECTION TASK 1 DAN 2
 st.header("Task 1 dan 2 Karakteristik Sampel Deskriptif")
@@ -62,12 +109,10 @@ with col_d1:
                            color_discrete_sequence=['#1e3d59'])
     st.plotly_chart(fig_age, use_container_width=True)
     
-    st.markdown("### Konteks Analisis Kasus")
-    st.markdown("Insight Grafik 1 Sebaran Usia")
-    st.markdown("""
-    * Mayoritas responden terkonsentrasi pada usia produktif muda di rentang 20 hingga 22 tahun
-    * Kemiringan kurva membuktikan bahwa riset ini didominasi oleh populasi generasi Z
-    """)
+    render_insight_card("Insight Grafik 1 Sebaran Usia", [
+        "Mayoritas responden terkonsentrasi pada usia produktif muda di rentang <b>20 hingga 22 tahun</b>",
+        "Kemiringan kurva membuktikan bahwa riset ini didominasi oleh populasi <b>generasi Z</b>"
+    ])
 
 with col_d2:
     fig_gen = px.pie(df_clean, names='gender', 
@@ -75,14 +120,10 @@ with col_d2:
                      color_discrete_sequence=['#17b978', '#a7ff83'])
     st.plotly_chart(fig_gen, use_container_width=True)
     
-    st.markdown("### Konteks Analisis Kasus")
-    st.markdown("Insight Grafik 2 Komposisi Gender")
-    st.markdown("""
-    * Sebaran sampel berhasil mencapai titik keseimbangan yang ideal antara pria dan wanita
-    * Keseimbangan ini mencegah adanya bias sudut pandang gender dalam pengambilan kesimpulan
-    """)
-
-st.markdown("<br><br>", unsafe_allow_html=True)
+    render_insight_card("Insight Grafik 2 Komposisi Gender", [
+        "Sebaran sampel berhasil mencapai titik keseimbangan yang ideal antara <b>pria dan wanita</b>",
+        "Keseimbangan ini mencegah adanya <b>bias sudut pandang gender</b> dalam pengambilan kesimpulan"
+    ])
 
 # SECTION TASK 3
 st.header("Task 3 Eksplorasi Visual Multivariat")
@@ -90,12 +131,10 @@ fig_par = px.parallel_categories(df_clean, dimensions=['gender', 'online1', 'ai_
                                  title="Grafik 3 Aliran Hubungan Gender Intensitas Online dan Pandangan Regulasi")
 st.plotly_chart(fig_par, use_container_width=True)
 
-st.markdown("### Konteks Analisis Kasus")
-st.markdown("Insight Grafik 3 Aliran Aktivitas Digital")
-st.markdown("""
-* Tingkat intensitas berselancar di internet tidak mengubah muara pandangan publik terhadap hukum teknologi
-* Baik pria maupun wanita dengan aktivitas online tinggi tetap bersepakat menuntut adanya regulasi AI yang ketat
-""")
+render_insight_card("Insight Grafik 3 Aliran Aktivitas Digital", [
+    "Tingkat intensitas berselancar di internet <b>tidak mengubah</b> muara pandangan publik terhadap hukum teknologi",
+    "Baik pria maupun wanita dengan aktivitas online tinggi tetap bersepakat menuntut adanya <b>regulasi AI yang ketat</b>"
+])
 st.markdown("<br>", unsafe_allow_html=True)
 
 col_m1, col_m2 = st.columns(2)
@@ -105,12 +144,10 @@ with col_m1:
                           color_discrete_sequence=px.colors.qualitative.Pastel)
     st.plotly_chart(fig_sun, use_container_width=True)
     
-    st.markdown("### Konteks Analisis Kasus")
-    st.markdown("Insight Grafik 4 Hierarki Pendidikan")
-    st.markdown("""
-    * Kesadaran akan ancaman teknologi tidak didominasi oleh kelompok akademisi tingkat tinggi saja melainkan merata
-    * Penolakan atau keraguan terhadap regulasi sangat minim terlihat di setiap anak cabang hierarki data
-    """)
+    render_insight_card("Insight Grafik 4 Hierarki Pendidikan", [
+        "Kesadaran akan ancaman teknologi <b>tidak didominasi</b> oleh kelompok akademisi tingkat tinggi saja melainkan merata",
+        "Penolakan atau keraguan terhadap regulasi <b>sangat minim terlihat</b> di setiap anak cabang hierarki data"
+    ])
     
 with col_m2:
     fig_tree = px.treemap(df_clean, path=['income', 'occupation'],
@@ -118,14 +155,10 @@ with col_m2:
                           color_discrete_sequence=px.colors.qualitative.Safe)
     st.plotly_chart(fig_tree, use_container_width=True)
     
-    st.markdown("### Konteks Analisis Kasus")
-    st.markdown("Insight Grafik 5 Struktur Ekonomi")
-    st.markdown("""
-    * Blok pendapatan di bawah 2 juta rupiah didominasi secara penuh oleh kelompok mahasiswa aktif
-    * Penyebaran klaster pendapatan yang lebih tinggi diisi oleh pekerja sektor swasta secara bervariasi
-    """)
-
-st.markdown("<br><br>", unsafe_allow_html=True)
+    render_insight_card("Insight Grafik 5 Struktur Ekonomi", [
+        "Blok pendapatan di bawah 2 juta rupiah didominasi secara penuh oleh kelompok <b>mahasiswa aktif</b>",
+        "Penyebaran klaster pendapatan yang lebih tinggi diisi oleh pekerja sektor swasta secara <b>bervariasi</b>"
+    ])
 
 # SECTION TASK 6 DAN 7
 st.header("Task 6 dan 7 Analisis Inferensial Lanjutan")
@@ -136,12 +169,10 @@ with col_i1:
                      color='education', color_discrete_sequence=px.colors.qualitative.Set2)
     st.plotly_chart(fig_box, use_container_width=True)
     
-    st.markdown("### Konteks Analisis Kasus")
-    st.markdown("Insight Grafik 6 Pengujian ANOVA")
-    st.markdown("""
-    * Perhitungan varians menemukan perbedaan usia rata rata yang sangat nyata antar jenjang pendidikan saat ini
-    * Pola sebaran ini sangat logis dan mencerminkan linimasa perjalanan waktu penempuhan akademis seseorang
-    """)
+    render_insight_card("Insight Grafik 6 Pengujian ANOVA", [
+        "Perhitungan varians menemukan <b>perbedaan usia rata rata</b> yang sangat nyata antar jenjang pendidikan saat ini",
+        "Pola sebaran ini sangat logis dan mencerminkan linimasa perjalanan waktu <b>penempuhan akademis</b> seseorang"
+    ])
     
 with col_i2:
     fig_bar = px.bar(df_clean, x='bank1', color='ai_reg1', barmode='stack',
@@ -149,20 +180,15 @@ with col_i2:
                      color_discrete_sequence=['#1e3d59', '#17b978', '#ff6b6b'])
     st.plotly_chart(fig_bar, use_container_width=True)
     
-    st.markdown("### Konteks Analisis Kasus")
-    st.markdown("Insight Grafik 7 Pengujian Chi Square")
-    st.markdown("""
-    * Uji independensi membuktikan sebaran perbankan bersifat homogen di seluruh lintas opini masyarakat
-    * Literasi keuangan perbankan dan pandangan aturan teknologi berkembang sejajar tanpa saling mempengaruhi
-    """)
-
-st.markdown("<br><br>", unsafe_allow_html=True)
+    render_insight_card("Insight Grafik 7 Pengujian Chi Square", [
+        "Uji independensi membuktikan sebaran perbankan bersifat <b>homogen</b> di seluruh lintas opini masyarakat",
+        "Literasi keuangan perbankan dan pandangan aturan teknologi berkembang sejajar tanpa <b>saling mempengaruhi</b>"
+    ])
 
 # SECTION TASK 8
 st.header("Task 8 Kesimpulan Analisis Inferensial Komprehensif")
-st.markdown("### Konteks Kesimpulan Akhir Studi Kasus")
-st.markdown("""
-* Aksesibilitas Teknologi Melalui uji Z test ditemukan adopsi ChatGPT sudah merata tanpa ada kesenjangan gender sama sekali
-* Hubungan Demografi Hasil perhitungan tingkat varians membuktikan perjalanan usia selalu beriringan dengan tingkat edukasi saat ini
-* Validitas Perilaku Pengujian independensi membuktikan pandangan urgensi aturan hukum teknologi AI bersifat bebas murni lahir dari kesadaran kolektif masyarakat
-""")
+render_insight_card("Kesimpulan Akhir Studi Kasus", [
+    "<b>Aksesibilitas Teknologi</b> Melalui uji Z test ditemukan adopsi ChatGPT sudah merata tanpa ada kesenjangan gender sama sekali",
+    "<b>Hubungan Demografi</b> Hasil perhitungan tingkat varians membuktikan perjalanan usia selalu beriringan dengan tingkat edukasi saat ini",
+    "<b>Validitas Perilaku</b> Pengujian independensi membuktikan pandangan urgensi aturan hukum teknologi AI bersifat bebas murni lahir dari kesadaran kolektif masyarakat"
+])
