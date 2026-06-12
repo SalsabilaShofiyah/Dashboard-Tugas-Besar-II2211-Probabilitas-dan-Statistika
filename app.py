@@ -10,12 +10,21 @@ st.set_page_config(page_title="AI Regulation Dashboard", page_icon="📊", layou
 def load_data():
     df = pd.read_csv("18224088.csv")
     
-    # --- INI BARIS YANG DITAMBAHKAN (PERBAIKAN ERROR) ---
-    # Paksa kolom 'age' menjadi angka (numeric) terlebih dahulu
+    # Paksa kolom 'age' menjadi angka (numeric)
     df['age'] = pd.to_numeric(df['age'], errors='coerce')
     
-    # Pembersihan Data: Filter usia produktif (15-80 tahun)
-    df_clean = df[(df['age'] >= 15) & (df['age'] <= 80)].copy()
+    # Pilih 11 kolom utama agar data lebih ringan (Persis seperti Task 1 Colab)
+    cols_utama = ['gender', 'age', 'education', 'occupation', 'income',
+                  'online1', 'ai_know1', 'ai_use1_chatgpt', 'ai_reg1',
+                  'bank1', 'bank4_mobile_banking']
+    df_clean = df[cols_utama].copy()
+    
+    # Filter usia produktif (15-80 tahun)
+    df_clean = df_clean[(df_clean['age'] >= 15) & (df_clean['age'] <= 80)]
+    
+    # --- INI KUNCI PERBAIKANNYA ---
+    # Hapus baris yang kosong (Missing Values / NaN) agar grafik Plotly tidak error!
+    df_clean.dropna(inplace=True)
     
     return df_clean
 
