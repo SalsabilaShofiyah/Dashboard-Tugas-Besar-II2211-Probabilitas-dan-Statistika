@@ -158,6 +158,7 @@ with col_m2:
     render_insight_card("Insight Grafik 5 Struktur Ekonomi", [
         "Blok pendapatan di bawah 2 juta rupiah didominasi secara penuh oleh kelompok <b>mahasiswa aktif</b>",
         "Penyebaran kelompok pendapatan yang lebih tinggi mayoritas diisi oleh pekerja sektor swasta secara <b>variatif</b>"
+    ])
 
 # SECTION TASK 6 DAN 7
 st.header("Task 6 dan 7 Analisis Inferensial Lanjutan")
