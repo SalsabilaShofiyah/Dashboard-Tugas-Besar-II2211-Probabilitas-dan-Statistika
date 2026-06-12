@@ -9,8 +9,14 @@ st.set_page_config(page_title="AI Regulation Dashboard", page_icon="📊", layou
 @st.cache_data
 def load_data():
     df = pd.read_csv("18224088.csv")
+    
+    # --- INI BARIS YANG DITAMBAHKAN (PERBAIKAN ERROR) ---
+    # Paksa kolom 'age' menjadi angka (numeric) terlebih dahulu
+    df['age'] = pd.to_numeric(df['age'], errors='coerce')
+    
     # Pembersihan Data: Filter usia produktif (15-80 tahun)
     df_clean = df[(df['age'] >= 15) & (df['age'] <= 80)].copy()
+    
     return df_clean
 
 df_clean = load_data()
